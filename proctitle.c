@@ -2,22 +2,22 @@
 #include <lauxlib.h>
 #include <string.h>
 
-static char **
-find_argv(lua_State *L)
+static char *
+find_argv0(lua_State *L)
 {
     extern char *__progname;
 
-    return &__progname;
+    return __progname;
 }
 
 static int
 set_proctitle(lua_State *L)
 {
     const char *title = luaL_checkstring(L, 1);
-    char **argv = find_argv(L);
+    char *argv0 = find_argv0(L);
 
     // XXX no length check
-    strcpy(argv[0], title);
+    strcpy(argv0, title);
 
     return 0;
 }
